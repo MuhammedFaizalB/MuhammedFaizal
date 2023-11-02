@@ -1,13 +1,27 @@
+$(document).ready(function() {
 const form = document.getElementById('contactForm');
-
     form.addEventListener('submit', function (event) {
         event.preventDefault();
+        
         if (validateForm()) {
-            showMessage();
-            form.reset();
+            $.ajax({
+                url:"https://script.google.com/macros/s/AKfycbwBEgDlyWSd3ODUBw06YZo2oTfmetBvfkeRQU7U-N9Vm_Fnmv-MTTnvH6VB23derxnc/exec",
+                data:$(this).serialize(),
+                method:"POST",
+                success:function (response){
+                    console.log("Success:", response);
+                    showMessage();
+                    form.reset();
+                },
+                error:function (err){
+                    console.log("Error:", err);
+                    alert("Something Error")
+    
+                }
+            })
         }
     });
-
+});
     function validateForm() {
         const name = document.getElementById('uname').value;
         const phoneNumber = document.getElementById('number').value;
@@ -33,3 +47,4 @@ const form = document.getElementById('contactForm');
     function showMessage(){
         alert('Form submitted successfully!');
     }
+
